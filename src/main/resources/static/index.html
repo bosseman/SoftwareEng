@@ -1,0 +1,29 @@
+<!-- 
+	Since we are building a dynamic website, this will be the first page we send
+	This page will have all default items such as Login/Logout, Search and Top 10
+	It will also hold the dynamic data.
+  -->
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<div layout:fragment="pageContent">
+
+		<!-- Templates get loaded here -->
+
+	</div>
+
+	<th:block layout:fragment="scripts">
+		<!-- Placeholder for page related javascript -->
+	</th:block>
+
+</body>
+</html>
