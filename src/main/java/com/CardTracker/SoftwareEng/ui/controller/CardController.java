@@ -15,7 +15,7 @@ import com.CardTracker.SoftwareEng.service.CardService;
 import com.CardTracker.SoftwareEng.ui.response.GetCardDetailsResponseModel;
 
 @RestController
-@RequestMapping("/cards")
+@RequestMapping("/api/cards")
 public class CardController {
 	@Autowired
 	CardService cardService;
@@ -44,5 +44,17 @@ public class CardController {
 		
 		return cardDetails;
 	}
-
+	@GetMapping("/search/{searchName}")
+	public List<GetCardDetailsResponseModel> searchCards(@PathVariable(name = "searchName") String searchName){
+		List<GetCardDetailsResponseModel> listOfCards = new ArrayList<GetCardDetailsResponseModel>();
+		
+		List<CardDto> listCardDto = cardService.getAllCardsLike(searchName);
+		
+		for(CardDto cd : listCardDto) {
+			GetCardDetailsResponseModel card = new GetCardDetailsResponseModel();
+			BeanUtils.copyProperties(cd, card);
+			listOfCards.add(card);
+		}
+		return listOfCards;
+	}
 }

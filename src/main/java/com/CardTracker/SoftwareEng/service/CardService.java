@@ -12,4 +12,6 @@ public interface CardService {
 	public CardDto getCard(long id);
 	
 	public List<CardDto> getAllCards();
+
+	public List<CardDto> getAllCardsLike(String searchName);
 }

@@ -1,16 +1,21 @@
 package com.CardTracker.SoftwareEng.entity;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-
+/*
+ * user data that will be saved
+ */
 @Entity(name = "users") // Name of table
 public class UserEntity implements Serializable {
 
@@ -38,10 +43,16 @@ public class UserEntity implements Serializable {
 	private Boolean emailVerificationStatus = false; // Default
 
 	@ManyToMany
-	@JoinTable(name="usersFavorites",
-			joinColumns = @JoinColumn(name = "userId"),
-			inverseJoinColumns = @JoinColumn(name = "cardId"))
+	@JoinTable(name = "usersFavorites", 
+		joinColumns = @JoinColumn(name = "userId"), 
+		inverseJoinColumns = @JoinColumn(name = "cardId"))
 	private List<CardEntity> favorites;
+
+	@ManyToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.EAGER)
+	@JoinTable(name = "userRoles",
+			joinColumns = @JoinColumn(name = "userId", referencedColumnName = "id"),
+			inverseJoinColumns = @JoinColumn(name = "rolesId"))
+	private Collection<RoleEntity> roles;
 
 	public long getId() {
 		return id;
@@ -99,9 +110,6 @@ public class UserEntity implements Serializable {
 		this.emailVerificationStatus = emailVerificationStatus;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
 
 	public List<CardEntity> getFavorites() {
 		return favorites;
@@ -110,8 +118,17 @@ public class UserEntity implements Serializable {
 	public void setFavorites(CardEntity favorites) {
 		this.favorites.add(favorites);
 	}
+
 	public void setFavorites(List<CardEntity> favorites) {
 		this.favorites = favorites;
+	}
+
+	public Collection<RoleEntity> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Collection<RoleEntity> roles) {
+		this.roles = roles;
 	}
 
 }

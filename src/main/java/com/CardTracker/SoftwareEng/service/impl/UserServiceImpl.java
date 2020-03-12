@@ -32,7 +32,8 @@ public class UserServiceImpl implements UserService {
 	Utils utils;
 	@Autowired
 	CardService cardService;
-
+	
+	//saves a user
 	@Override
 	public UserDto createUser(UserDto userDto) {
 		// -----------------Validate username---------------
@@ -53,11 +54,12 @@ public class UserServiceImpl implements UserService {
 		UserEntity newUserEntity = userRepository.save(userEntity); // Save user
 
 		BeanUtils.copyProperties(newUserEntity, returnDto);
-
+		
 		return returnDto;
 		// -----------------------------------------------------
 	}
-
+	
+	//Loads an account by user name
 	@Override
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
 		// -------------This function is only used by Spring Security---------------
@@ -70,6 +72,7 @@ public class UserServiceImpl implements UserService {
 		// -------------------------------------------------------------------------------
 	}
 
+	//Returns user by user name
 	@Override
 	public UserDto getUser(String userName) {
 		// ---------------Used to get the user------------------
@@ -84,7 +87,8 @@ public class UserServiceImpl implements UserService {
 		return returnValue;
 		// ---------------------------------------------------------
 	}
-
+	
+	//Returns user by ID
 	@Override
 	public UserDto getUserByUserId(String userId) {
 		UserDto returnValue = new UserDto();
@@ -94,7 +98,8 @@ public class UserServiceImpl implements UserService {
 
 		return returnValue;
 	}
-
+	
+	//Updates user profile
 	@Override
 	public UserDto updateUser(String userId, UserDto userDto) {
 		UserDto returnValue = new UserDto();
@@ -127,7 +132,8 @@ public class UserServiceImpl implements UserService {
 
 		return returnValue;
 	}
-
+	
+	//Gets all cards a user liked
 	@Override
 	public List<CardDto> getFavoriteCards(String userId, int page, int limit) {
 		List<CardDto> favoriteCards = new ArrayList<>();
@@ -145,7 +151,7 @@ public class UserServiceImpl implements UserService {
 
 		return favoriteCards;
 	}
-
+	//adds a favorite card
 	@Override
 	public CardDto addFavoriteCard(String userId, long cardId) {
 		CardDto cardDto = new CardDto();
@@ -165,7 +171,8 @@ public class UserServiceImpl implements UserService {
 		
 		return cardDto;
 	}
-
+	
+	//delete a favorite card
 	@Override
 	public boolean deleteFavorite(String userId, long cardId) {
 		CardDto cardDto = new CardDto();

@@ -14,7 +14,9 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import io.jsonwebtoken.Jwts;
-
+/*
+ * Check JSON token to ensure user is who they say they are
+ */
 public class AutherizationFilter extends BasicAuthenticationFilter{
 
 	public AutherizationFilter(AuthenticationManager authenticationManager) {

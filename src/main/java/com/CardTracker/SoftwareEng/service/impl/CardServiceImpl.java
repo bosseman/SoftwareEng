@@ -15,6 +15,10 @@ import com.CardTracker.SoftwareEng.io.repository.CardRepository;
 import com.CardTracker.SoftwareEng.service.CardService;
 import com.CardTracker.SoftwareEng.shared.dto.CardDto;
 
+/*
+ * Services offered for users not logged in
+ */
+
 @Service
 public class CardServiceImpl implements CardService {
 	
@@ -35,12 +39,28 @@ public class CardServiceImpl implements CardService {
 	public List<CardDto> getAllCards() {
 		List<CardDto> listOfCards = new ArrayList<>();
 		
-		List<CardEntity> EntityCards = (List<CardEntity>) cardRepository.findAll();
+		List<CardEntity> entityCards = (List<CardEntity>) cardRepository.findAll();
 
-		for(CardEntity card: EntityCards) {
+		for(CardEntity card: entityCards) {
 			CardDto addThis = new CardDto();
 			BeanUtils.copyProperties(card, addThis);
 			listOfCards.add(addThis);
+		}
+		
+		return listOfCards;
+	}
+
+	//This method
+	public List<CardDto> getAllCardsLike(String searchName) {
+		List<CardDto> listOfCards = new ArrayList<CardDto>();
+		
+		List<CardEntity> cardEntity = cardRepository.findByCardNameContains(searchName);
+		
+		for(CardEntity ce : cardEntity) {
+			CardDto card = new CardDto();
+			BeanUtils.copyProperties(ce, card);
+			
+			listOfCards.add(card);
 		}
 		
 		return listOfCards;

@@ -26,7 +26,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
-
+/*
+ * Authenticates users as well as returns JSON token
+ */
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter{
 	 private final AuthenticationManager authenticationManager;
 	 
@@ -58,6 +60,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter{
 				 					.signWith(SignatureAlgorithm.HS512, SecurityConstants.TOKEN_SECRET)
 				 					.compact(); //Build a token with expriation date
 		 UserService userService = (UserService) SpringApplicationContext.getBean("userServiceImpl");
+		 
 		 UserDto userDto = userService.getUser(userName);
 		 
 		 res.addHeader(SecurityConstants.HEADER_STRING, SecurityConstants.TOKEN_PREFIX+token); //Return token

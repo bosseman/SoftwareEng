@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.CardTracker.SoftwareEng.entity.CardEntity;
-
+//User data transfer object
 public class UserDto implements Serializable {
 
 	private static final long serialVersionUID = -1095453772425672285L;
