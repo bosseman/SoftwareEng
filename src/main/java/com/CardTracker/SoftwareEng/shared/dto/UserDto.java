@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.CardTracker.SoftwareEng.entity.CardEntity;
 
+//User data transfer object
 public class UserDto implements Serializable {
 
 	private static final long serialVersionUID = -1095453772425672285L;
@@ -15,8 +16,9 @@ public class UserDto implements Serializable {
 	private String password; // plaintext
 	private String encryptedPassword; // password encrypted --> save this in DB
 	private String emailVerificationToken;
-	private Boolean emailVerificationStatus = false; //default
+	private Boolean emailVerificationStatus = false; // default
 	private List<CardDto> favorites;
+
 	public long getId() {
 		return id;
 	}

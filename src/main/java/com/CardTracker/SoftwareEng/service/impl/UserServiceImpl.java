@@ -15,6 +15,7 @@ import com.CardTracker.SoftwareEng.entity.CardEntity;
 import com.CardTracker.SoftwareEng.entity.UserEntity;
 
 import com.CardTracker.SoftwareEng.io.repository.UserRepository;
+import com.CardTracker.SoftwareEng.security.UserPrincipal;
 import com.CardTracker.SoftwareEng.service.CardService;
 import com.CardTracker.SoftwareEng.service.UserService;
 import com.CardTracker.SoftwareEng.shared.dto.CardDto;
@@ -33,6 +34,7 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	CardService cardService;
 
+	// saves a user
 	@Override
 	public UserDto createUser(UserDto userDto) {
 		// -----------------Validate username---------------
@@ -58,6 +60,7 @@ public class UserServiceImpl implements UserService {
 		// -----------------------------------------------------
 	}
 
+	// Loads an account by user name
 	@Override
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
 		// -------------This function is only used by Spring Security---------------
@@ -66,10 +69,12 @@ public class UserServiceImpl implements UserService {
 		if (userEntity == null)
 			throw new UsernameNotFoundException(userName);
 
-		return new User(userEntity.getUserName(), userEntity.getEncryptedPassword(), new ArrayList<>());
+		return new UserPrincipal(userEntity);
+		//return new User(userEntity.getUserName(), userEntity.getEncryptedPassword(), new ArrayList<>());
 		// -------------------------------------------------------------------------------
 	}
 
+	// Returns user by user name
 	@Override
 	public UserDto getUser(String userName) {
 		// ---------------Used to get the user------------------
@@ -85,6 +90,7 @@ public class UserServiceImpl implements UserService {
 		// ---------------------------------------------------------
 	}
 
+	// Returns user by ID
 	@Override
 	public UserDto getUserByUserId(String userId) {
 		UserDto returnValue = new UserDto();
@@ -95,6 +101,7 @@ public class UserServiceImpl implements UserService {
 		return returnValue;
 	}
 
+	// Updates user profile
 	@Override
 	public UserDto updateUser(String userId, UserDto userDto) {
 		UserDto returnValue = new UserDto();
@@ -128,24 +135,26 @@ public class UserServiceImpl implements UserService {
 		return returnValue;
 	}
 
+	// Gets all cards a user liked
 	@Override
 	public List<CardDto> getFavoriteCards(String userId, int page, int limit) {
 		List<CardDto> favoriteCards = new ArrayList<>();
 
 		UserEntity userProfile = userRepository.findByUserId(userId);
 		for (CardEntity card : userProfile.getFavorites()) {
-			
+
 			CardDto cardData = new CardDto();
-			
+
 			BeanUtils.copyProperties(card, cardData);
 			cardData.setFavorite(true);
-			
+
 			favoriteCards.add(cardData);
 		}
 
 		return favoriteCards;
 	}
 
+	// adds a favorite card
 	@Override
 	public CardDto addFavoriteCard(String userId, long cardId) {
 		CardDto cardDto = new CardDto();
@@ -162,28 +171,29 @@ public class UserServiceImpl implements UserService {
 		userRepository.save(userEntity);
 
 		cardDto.setFavorite(true);
-		
+
 		return cardDto;
 	}
 
+	// delete a favorite card
 	@Override
 	public boolean deleteFavorite(String userId, long cardId) {
 		CardDto cardDto = new CardDto();
 		UserDto userDto = new UserDto();
-		
+
 		UserEntity userEntity = userRepository.findByUserId(userId);
 		cardDto = cardService.getCard(cardId);
-		
+
 		List<CardEntity> userFavorites = userEntity.getFavorites();
-		for(CardEntity card : userFavorites) {
-			if(card.getCardId() == cardId) {
+		for (CardEntity card : userFavorites) {
+			if (card.getCardId() == cardId) {
 				userFavorites.remove(card);
 				break;
 			}
 		}
 		userEntity.setFavorites(userFavorites);
 		userRepository.save(userEntity);
-		
+
 		return true;
 	}
 }

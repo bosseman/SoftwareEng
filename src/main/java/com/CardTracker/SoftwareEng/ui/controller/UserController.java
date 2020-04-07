@@ -35,7 +35,7 @@ import com.CardTracker.SoftwareEng.ui.response.UserLoginResponseModel;
 import com.CardTracker.SoftwareEng.ui.response.GetCardDetailsResponseModel;
 
 @RestController
-@RequestMapping("users")
+@RequestMapping("/api/users")
 public class UserController {
 
 	@Autowired
@@ -43,8 +43,9 @@ public class UserController {
 
 	// -------------Below are general user functions ----------------------
 
+	// Returns a users info
 	// Tested --> Good
-	@GetMapping(path = "/{userId}", consumes = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE })
+	@GetMapping(path = "/{userId}")
 	public GetUserResponseModel getUser(@PathVariable String userId) {
 		GetUserResponseModel returnValue = new GetUserResponseModel();
 		UserDto userDto = userService.getUserByUserId(userId);
@@ -53,10 +54,9 @@ public class UserController {
 		return returnValue;
 	}
 
+	// saves a user
 	// Tested --> Good
-	@PostMapping(consumes = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE }, produces = {
-			MediaType.APPLICATION_XML_VALUE } // Need to config XML template
-	)
+	@PostMapping // Need to config XML template
 	public CreateUserResponseModel createUser(@RequestBody CreateUserRequestModel userForm) {
 		CreateUserResponseModel responseModel = new CreateUserResponseModel();
 		UserDto userDto = new UserDto();
@@ -72,11 +72,10 @@ public class UserController {
 		return responseModel;
 	}
 
+	// updates a user
 	// Tested --> Good
-	@PutMapping(path = "/{id}", consumes = { MediaType.APPLICATION_XML_VALUE,
-			MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_XML_VALUE } // Need to config XML
-																								// template
-	)
+	@PutMapping(path = "/{id}") // Need to config XML
+								// template
 	public CreateUserResponseModel updateUser(@PathVariable String id, @RequestBody UpdateUserRequestModel userForm) {
 		CreateUserResponseModel updateUserResponseModel = new CreateUserResponseModel();
 		UserDto newUserData = new UserDto();
@@ -91,6 +90,7 @@ public class UserController {
 
 	// ------------Below only apply to those logged in------------
 
+	// Get users favorite cards
 	// Tested --> Good
 	@GetMapping("/{userId}/favorites")
 	public List<GetCardDetailsResponseModel> getFavorites(@PathVariable String userId,
@@ -111,6 +111,7 @@ public class UserController {
 		return listOfCards;
 	}
 
+	// Save a users favorite card
 	// Tested ---> Good
 	@PostMapping("/{userId}/favorites/{cardId}")
 	public GetCardDetailsResponseModel addFavorites(@PathVariable("userId") String userId,
@@ -123,6 +124,7 @@ public class UserController {
 		return cardModel;
 	}
 
+	// delete a favorite card
 	// Tested --> good
 	@DeleteMapping("/{userId}/favorites/{cardId}")
 	public DeleteCardResponseModel deleteFavorites(@PathVariable(name = "userId") String userId,
@@ -138,5 +140,10 @@ public class UserController {
 
 		return deleteCardResponse;
 	}
+
 	// --------------------------------------------------------------
+	// --------ADMIN CAN USE SCRAPPING SERVICES BELOW-----------------
+	// -----------------TO DO: ADD ROLES -----------------------------
+	// ------------BELOW ASSUMES WE HAVE IMPLEMENTED ROLES------------
+
 }

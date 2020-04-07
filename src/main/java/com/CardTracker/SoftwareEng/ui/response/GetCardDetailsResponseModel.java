@@ -8,8 +8,8 @@ public class GetCardDetailsResponseModel {
 	private String currentStats; // We can map sell price to stats
 	private String playerTeam;
 	private String playerSport; // In case we want to expand our domain
-	private boolean favorite = false; //Default
-	
+	private boolean favorite = false; // Default
+
 	public long getCardId() {
 		return cardId;
 	}
