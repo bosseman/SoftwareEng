@@ -2,31 +2,38 @@ package com.CardTracker.SoftwareEng.entity;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+
 /*
  * Entity for setting authorities to users
  */
 @Entity(name = "authorities")
-public class AuthorityEntity implements Serializable{
-
+public class AuthorityEntity implements Serializable {
 
 	private static final long serialVersionUID = -1121848235092382869L;
 
 	@Id
 	@GeneratedValue
 	private long authorityId;
-	
+
 	@Column(nullable = false)
 	private String name;
 
 	@ManyToMany(mappedBy = "authorityRoles")
 	Collection<RoleEntity> roleAuthority;
+
+	public AuthorityEntity(String name) {
+		this.name = name;
+	}
+
+	public AuthorityEntity() {
+
+	}
 
 	public long getAuthorityId() {
 		return authorityId;

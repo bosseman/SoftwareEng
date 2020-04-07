@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+
 /*
  * user data that will be saved
  */
@@ -43,15 +44,11 @@ public class UserEntity implements Serializable {
 	private Boolean emailVerificationStatus = false; // Default
 
 	@ManyToMany
-	@JoinTable(name = "usersFavorites", 
-		joinColumns = @JoinColumn(name = "userId"), 
-		inverseJoinColumns = @JoinColumn(name = "cardId"))
+	@JoinTable(name = "usersFavorites", joinColumns = @JoinColumn(name = "userId"), inverseJoinColumns = @JoinColumn(name = "cardId"))
 	private List<CardEntity> favorites;
 
-	@ManyToMany(cascade = {CascadeType.PERSIST}, fetch = FetchType.EAGER)
-	@JoinTable(name = "userRoles",
-			joinColumns = @JoinColumn(name = "userId", referencedColumnName = "id"),
-			inverseJoinColumns = @JoinColumn(name = "rolesId"))
+	@ManyToMany(cascade = { CascadeType.PERSIST }, fetch = FetchType.EAGER)
+	@JoinTable(name = "userRoles", joinColumns = @JoinColumn(name = "userId", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "rolesId"))
 	private Collection<RoleEntity> roles;
 
 	public long getId() {
@@ -109,7 +106,6 @@ public class UserEntity implements Serializable {
 	public void setEmailVerificationStatus(Boolean emailVerificationStatus) {
 		this.emailVerificationStatus = emailVerificationStatus;
 	}
-
 
 	public List<CardEntity> getFavorites() {
 		return favorites;

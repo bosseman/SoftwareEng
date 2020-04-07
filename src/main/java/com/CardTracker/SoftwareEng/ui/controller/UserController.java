@@ -42,8 +42,8 @@ public class UserController {
 	UserService userService;
 
 	// -------------Below are general user functions ----------------------
-	
-	//Returns a users info
+
+	// Returns a users info
 	// Tested --> Good
 	@GetMapping(path = "/{userId}")
 	public GetUserResponseModel getUser(@PathVariable String userId) {
@@ -53,8 +53,8 @@ public class UserController {
 		BeanUtils.copyProperties(userDto, returnValue);
 		return returnValue;
 	}
-	
-	//saves a user
+
+	// saves a user
 	// Tested --> Good
 	@PostMapping // Need to config XML template
 	public CreateUserResponseModel createUser(@RequestBody CreateUserRequestModel userForm) {
@@ -71,11 +71,11 @@ public class UserController {
 
 		return responseModel;
 	}
-	
-	//updates a user
+
+	// updates a user
 	// Tested --> Good
-	@PutMapping(path = "/{id}")// Need to config XML
-																								// template
+	@PutMapping(path = "/{id}") // Need to config XML
+								// template
 	public CreateUserResponseModel updateUser(@PathVariable String id, @RequestBody UpdateUserRequestModel userForm) {
 		CreateUserResponseModel updateUserResponseModel = new CreateUserResponseModel();
 		UserDto newUserData = new UserDto();
@@ -89,8 +89,8 @@ public class UserController {
 	}
 
 	// ------------Below only apply to those logged in------------
-	
-	//Get users favorite cards
+
+	// Get users favorite cards
 	// Tested --> Good
 	@GetMapping("/{userId}/favorites")
 	public List<GetCardDetailsResponseModel> getFavorites(@PathVariable String userId,
@@ -110,8 +110,8 @@ public class UserController {
 
 		return listOfCards;
 	}
-	
-	//Save a users favorite card
+
+	// Save a users favorite card
 	// Tested ---> Good
 	@PostMapping("/{userId}/favorites/{cardId}")
 	public GetCardDetailsResponseModel addFavorites(@PathVariable("userId") String userId,
@@ -123,8 +123,8 @@ public class UserController {
 
 		return cardModel;
 	}
-	
-	//delete a favorite card
+
+	// delete a favorite card
 	// Tested --> good
 	@DeleteMapping("/{userId}/favorites/{cardId}")
 	public DeleteCardResponseModel deleteFavorites(@PathVariable(name = "userId") String userId,
@@ -142,8 +142,8 @@ public class UserController {
 	}
 
 	// --------------------------------------------------------------
-	//--------ADMIN CAN USE SCRAPPING SERVICES BELOW-----------------
-	//-----------------TO DO: ADD ROLES -----------------------------
-	//------------BELOW ASSUMES WE HAVE IMPLEMENTED ROLES------------
+	// --------ADMIN CAN USE SCRAPPING SERVICES BELOW-----------------
+	// -----------------TO DO: ADD ROLES -----------------------------
+	// ------------BELOW ASSUMES WE HAVE IMPLEMENTED ROLES------------
 
 }

@@ -13,41 +13,51 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
+import com.CardTracker.SoftwareEng.entity.UserEntity;
+import com.CardTracker.SoftwareEng.io.repository.UserRepository;
+
 import io.jsonwebtoken.Jwts;
+
 /*
  * Check JSON token to ensure user is who they say they are
  */
-public class AutherizationFilter extends BasicAuthenticationFilter{
+public class AutherizationFilter extends BasicAuthenticationFilter {
 
-	public AutherizationFilter(AuthenticationManager authenticationManager) {
+	private final UserRepository userRepository;
+	
+	public AutherizationFilter(AuthenticationManager authenticationManager, UserRepository userRepository) {
 		super(authenticationManager);
-		
+		this.userRepository = userRepository;
 	}
 
 	@Override
-	protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException{
-		
+	protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
+			throws IOException, ServletException {
+
 		String header = req.getHeader(SecurityConstants.HEADER_STRING);
-		
-		if(header ==null || !header.startsWith(SecurityConstants.TOKEN_PREFIX)) {
+
+		if (header == null || !header.startsWith(SecurityConstants.TOKEN_PREFIX)) {
 			chain.doFilter(req, res);
 			return;
 		}
-		
+
 		UsernamePasswordAuthenticationToken authentication = getAuthentication(req);
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		chain.doFilter(req, res);
 	}
-	
+
 	private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest req) {
 		String token = req.getHeader(SecurityConstants.HEADER_STRING);
-		
-		if(token != null) {
+
+		if (token != null) {
 			token = token.replace(SecurityConstants.TOKEN_PREFIX, "");
-			
-			String user = Jwts.parser().setSigningKey(SecurityConstants.TOKEN_SECRET).parseClaimsJws(token).getBody().getSubject();
-			if(user != null) {
-				return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
+
+			String user = Jwts.parser().setSigningKey(SecurityConstants.TOKEN_SECRET).parseClaimsJws(token).getBody()
+					.getSubject();
+			if (user != null) {
+				UserEntity userEntity = userRepository.findByUserName(user);
+				UserPrincipal userPrin = new UserPrincipal(userEntity);
+				return new UsernamePasswordAuthenticationToken(user, null, userPrin.getAuthorities());
 			}
 			return null;
 		}

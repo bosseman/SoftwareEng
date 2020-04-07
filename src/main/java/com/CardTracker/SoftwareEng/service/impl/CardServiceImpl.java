@@ -21,51 +21,51 @@ import com.CardTracker.SoftwareEng.shared.dto.CardDto;
 
 @Service
 public class CardServiceImpl implements CardService {
-	
+
 	@Autowired
 	CardRepository cardRepository;
-	
+
+	// Returns a single card by its ID
 	@Override
 	public CardDto getCard(long id) {
 		CardDto cardDto = new CardDto();
-		
+
 		CardEntity cardEntity = cardRepository.findById(id);
 		BeanUtils.copyProperties(cardEntity, cardDto);
 
-		
 		return cardDto;
 	}
 
+	// Will return all cards saved in DB
 	public List<CardDto> getAllCards() {
 		List<CardDto> listOfCards = new ArrayList<>();
-		
+
 		List<CardEntity> entityCards = (List<CardEntity>) cardRepository.findAll();
 
-		for(CardEntity card: entityCards) {
+		for (CardEntity card : entityCards) {
 			CardDto addThis = new CardDto();
 			BeanUtils.copyProperties(card, addThis);
 			listOfCards.add(addThis);
 		}
-		
+
 		return listOfCards;
 	}
 
-	//This method
+	// Search method. Will look for anything that contains the name passed by(or
+	// character)
 	public List<CardDto> getAllCardsLike(String searchName) {
 		List<CardDto> listOfCards = new ArrayList<CardDto>();
-		
+
 		List<CardEntity> cardEntity = cardRepository.findByCardNameContains(searchName);
-		
-		for(CardEntity ce : cardEntity) {
+
+		for (CardEntity ce : cardEntity) {
 			CardDto card = new CardDto();
 			BeanUtils.copyProperties(ce, card);
-			
+
 			listOfCards.add(card);
 		}
-		
+
 		return listOfCards;
 	}
-	
-	
 
 }

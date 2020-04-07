@@ -19,14 +19,15 @@ import com.CardTracker.SoftwareEng.ui.response.GetCardDetailsResponseModel;
 public class CardController {
 	@Autowired
 	CardService cardService;
-	
-	@GetMapping //Tested --> Good
+
+	// Returns all cards
+	@GetMapping // Tested --> Good
 	public List<GetCardDetailsResponseModel> getCards() {
 		List<GetCardDetailsResponseModel> listOfCards = new ArrayList<GetCardDetailsResponseModel>();
-		
+
 		List<CardDto> listOfCardDto = cardService.getAllCards();
 
-		for(CardDto card : listOfCardDto) {
+		for (CardDto card : listOfCardDto) {
 			GetCardDetailsResponseModel responseCard = new GetCardDetailsResponseModel();
 			BeanUtils.copyProperties(card, responseCard);
 			listOfCards.add(responseCard);
@@ -34,23 +35,26 @@ public class CardController {
 
 		return listOfCards;
 	}
-	
+
+	// Returns a single card by its id
 	@GetMapping(path = "/{cardId}")
 	public GetCardDetailsResponseModel getCard(@PathVariable long cardId) {
 		GetCardDetailsResponseModel cardDetails = new GetCardDetailsResponseModel();
 		CardDto cardDto = cardService.getCard(cardId);
-		
+
 		BeanUtils.copyProperties(cardDto, cardDetails);
-		
+
 		return cardDetails;
 	}
+
+	// Search for a card
 	@GetMapping("/search/{searchName}")
-	public List<GetCardDetailsResponseModel> searchCards(@PathVariable(name = "searchName") String searchName){
+	public List<GetCardDetailsResponseModel> searchCards(@PathVariable(name = "searchName") String searchName) {
 		List<GetCardDetailsResponseModel> listOfCards = new ArrayList<GetCardDetailsResponseModel>();
-		
+
 		List<CardDto> listCardDto = cardService.getAllCardsLike(searchName);
-		
-		for(CardDto cd : listCardDto) {
+
+		for (CardDto cd : listCardDto) {
 			GetCardDetailsResponseModel card = new GetCardDetailsResponseModel();
 			BeanUtils.copyProperties(cd, card);
 			listOfCards.add(card);

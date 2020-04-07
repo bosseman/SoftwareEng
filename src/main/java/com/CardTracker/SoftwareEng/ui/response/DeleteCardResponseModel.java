@@ -10,5 +10,5 @@ public class DeleteCardResponseModel {
 	public void setSuccessfulDelete(boolean successfulDelete) {
 		this.successfulDelete = successfulDelete;
 	}
-	
+
 }

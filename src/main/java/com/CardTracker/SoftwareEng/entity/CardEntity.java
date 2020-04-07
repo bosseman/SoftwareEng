@@ -3,11 +3,14 @@ package com.CardTracker.SoftwareEng.entity;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+
 /*
  * Attributes for cards we wish to save
  */
@@ -20,7 +23,9 @@ public class CardEntity implements Serializable {
 	private long cardId;
 	private String cardName;
 	private String cardType;
-	private String lastSoldPrice; // We can implement a list of prices with dates in a later time
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<CardPriceHistory> prices; // We can implement a list of prices with dates in a later time
+
 	private String currentStats; // We can map sell price to stats
 	private String playerTeam;
 	private String playerSport; // In case we want to expand our domain
@@ -53,12 +58,13 @@ public class CardEntity implements Serializable {
 		this.cardType = cardType;
 	}
 
-	public String getLastSoldPrice() {
-		return lastSoldPrice;
+	public List<CardPriceHistory> getPrices() {
+		return prices;
 	}
 
-	public void setLastSoldPrice(String lastSoldPrice) {
-		this.lastSoldPrice = lastSoldPrice;
+	// Add one price at a time.
+	public void setPrices(CardPriceHistory prices) {
+		this.prices.add(prices);
 	}
 
 	public String getCurrentStats() {
