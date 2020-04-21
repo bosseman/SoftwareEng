@@ -53,12 +53,7 @@ public class InitialUsersSetup {
 
 		UserEntity adminUser = new UserEntity();
 		if (userRepo.findByUserName("admin") == null) {
-			adminUser.setUserName("admin");
-			adminUser.setEmail("JustBecasueINeedThis.com");
-			adminUser.setUserId(utils.generateUserId(15));
-			adminUser.setEncryptedPassword(bCryptPasswordEncoder.encode("CatsAreTheBest123!"));
-			adminUser.setRoles(Arrays.asList(admin));
-
+			//Removed. 
 			userRepo.save(adminUser);
 		}
 	}
