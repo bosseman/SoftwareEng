@@ -11,8 +11,8 @@ import com.CardTracker.SoftwareEng.entity.CardEntity;
 public interface CardRepository extends CrudRepository<CardEntity, Long> {
 	public CardEntity findById(long id);
 
-	public List<CardEntity> findByCardNameContains(String cardName);
+	public List<CardEntity> findByNameContains(String name);
 	
-	public CardEntity findByCardName(String cardName);
+	public CardEntity findByName(String name);
 
 }

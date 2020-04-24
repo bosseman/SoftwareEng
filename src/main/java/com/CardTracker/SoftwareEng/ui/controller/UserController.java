@@ -97,6 +97,8 @@ public class UserController {
 			@RequestParam(value = "page", defaultValue = "1") int page,
 			@RequestParam(value = "limit", defaultValue = "25") int limit) {
 
+		//NOTES I need to update all fields in response to represent the new database fields
+		
 		List<GetCardDetailsResponseModel> listOfCards = new ArrayList<>();
 
 		List<CardDto> cards = userService.getFavoriteCards(userId, page, limit);
@@ -140,10 +142,5 @@ public class UserController {
 
 		return deleteCardResponse;
 	}
-
-	// --------------------------------------------------------------
-	// --------ADMIN CAN USE SCRAPPING SERVICES BELOW-----------------
-	// -----------------TO DO: ADD ROLES -----------------------------
-	// ------------BELOW ASSUMES WE HAVE IMPLEMENTED ROLES------------
 
 }

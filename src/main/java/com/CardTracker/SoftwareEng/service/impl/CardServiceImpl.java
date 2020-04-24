@@ -56,7 +56,7 @@ public class CardServiceImpl implements CardService {
 	public List<CardDto> getAllCardsLike(String searchName) {
 		List<CardDto> listOfCards = new ArrayList<CardDto>();
 
-		List<CardEntity> cardEntity = cardRepository.findByCardNameContains(searchName);
+		List<CardEntity> cardEntity = cardRepository.findByNameContains(searchName);
 
 		for (CardEntity ce : cardEntity) {
 			CardDto card = new CardDto();

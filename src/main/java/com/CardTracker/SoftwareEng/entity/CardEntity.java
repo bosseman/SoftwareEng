@@ -21,86 +21,158 @@ public class CardEntity implements Serializable {
 	@Id
 	@GeneratedValue
 	private long cardId;
-	private String cardName;
-	private String cardType;
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<CardPriceHistory> prices; // We can implement a list of prices with dates in a later time
-
-	private String currentStats; // We can map sell price to stats
-	private String playerTeam;
-	private String playerSport; // In case we want to expand our domain
+	private String name;
+	private String team;
+	private String price;
+	private String timeSold; 
+	private String position;
+	private String age;
+	private String height;
+	private String draftPosition;
+	private String shootingPercentage;
+	private String freeThrowPercentage;
+	private String usageRate;
+	private String threePointPercentage;
+	private String freeThrowFrequency;
+	private String assistRate;
+	private String turnoverRate;
+	private String reboundRate;
+	private String blockingRate;
+	private String stealRate;
+	private String defenseRate;
 
 	@ManyToMany(mappedBy = "favorites")
 	private List<UserEntity> likedBy;
-
-	// private boolean favorite = false; //Default
+	
 	public long getCardId() {
 		return cardId;
 	}
-
 	public void setCardId(long cardId) {
 		this.cardId = cardId;
 	}
-
-	public String getCardName() {
-		return cardName;
+	public String getName() {
+		return name;
 	}
-
-	public void setCardName(String cardName) {
-		this.cardName = cardName;
+	public void setName(String name) {
+		this.name = name;
 	}
-
-	public String getCardType() {
-		return cardType;
+	public String getTeam() {
+		return team;
 	}
-
-	public void setCardType(String cardType) {
-		this.cardType = cardType;
+	public void setTeam(String team) {
+		this.team = team;
 	}
-
-	public List<CardPriceHistory> getPrices() {
-		return prices;
+	public String getPrice() {
+		return price;
 	}
-
-	// Add one price at a time.
-	public void setPrices(CardPriceHistory prices) {
-		this.prices.add(prices);
+	public void setPrice(String price) {
+		this.price = price;
 	}
-
-	public String getCurrentStats() {
-		return currentStats;
+	public String getTimeSold() {
+		return timeSold;
 	}
-
-	public void setCurrentStats(String currentStats) {
-		this.currentStats = currentStats;
+	public void setTimeSold(String timeSold) {
+		this.timeSold = timeSold;
 	}
-
-	public String getPlayerTeam() {
-		return playerTeam;
+	public String getPosition() {
+		return position;
 	}
-
-	public void setPlayerTeam(String playerTeam) {
-		this.playerTeam = playerTeam;
+	public void setPosition(String position) {
+		this.position = position;
 	}
-
-	public String getPlayerSport() {
-		return playerSport;
+	public String getAge() {
+		return age;
 	}
-
-	public void setPlayerSport(String playerSport) {
-		this.playerSport = playerSport;
+	public void setAge(String age) {
+		this.age = age;
 	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public String getHeight() {
+		return height;
 	}
-
+	public void setHeight(String height) {
+		this.height = height;
+	}
+	public String getDraftPosition() {
+		return draftPosition;
+	}
+	public void setDraftPosition(String draftPosition) {
+		this.draftPosition = draftPosition;
+	}
+	public String getShootingPercentage() {
+		return shootingPercentage;
+	}
+	public void setShootingPercentage(String shootingPercentage) {
+		this.shootingPercentage = shootingPercentage;
+	}
+	public String getFreeThrowPercentage() {
+		return freeThrowPercentage;
+	}
+	public void setFreeThrowPercentage(String freeThrowPercentage) {
+		this.freeThrowPercentage = freeThrowPercentage;
+	}
+	public String getUsageRate() {
+		return usageRate;
+	}
+	public void setUsageRate(String usageRate) {
+		this.usageRate = usageRate;
+	}
+	public String getThreePointPercentage() {
+		return threePointPercentage;
+	}
+	public void setThreePointPercentage(String threePointPercentage) {
+		this.threePointPercentage = threePointPercentage;
+	}
+	public String getFreeThrowFrequency() {
+		return freeThrowFrequency;
+	}
+	public void setFreeThrowFrequency(String freeThrowFrequency) {
+		this.freeThrowFrequency = freeThrowFrequency;
+	}
+	public String getAssistRate() {
+		return assistRate;
+	}
+	public void setAssistRate(String assistRate) {
+		this.assistRate = assistRate;
+	}
+	public String getTurnoverRate() {
+		return turnoverRate;
+	}
+	public void setTurnoverRate(String turnoverRate) {
+		this.turnoverRate = turnoverRate;
+	}
+	public String getReboundRate() {
+		return reboundRate;
+	}
+	public void setReboundRate(String reboundRate) {
+		this.reboundRate = reboundRate;
+	}
+	public String getBlockingRate() {
+		return blockingRate;
+	}
+	public void setBlockingRate(String blockingRate) {
+		this.blockingRate = blockingRate;
+	}
+	public String getStealRate() {
+		return stealRate;
+	}
+	public void setStealRate(String stealRate) {
+		this.stealRate = stealRate;
+	}
 	public List<UserEntity> getLikedBy() {
 		return likedBy;
 	}
-
 	public void setLikedBy(List<UserEntity> likedBy) {
 		this.likedBy = likedBy;
 	}
-
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	public String getDefenseRate() {
+		return defenseRate;
+	}
+	public void setDefenseRate(String defenseRate) {
+		this.defenseRate = defenseRate;
+	}
+	
 }
+	
