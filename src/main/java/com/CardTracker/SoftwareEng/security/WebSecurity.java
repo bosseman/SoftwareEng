@@ -32,7 +32,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 		http.csrf().disable().authorizeRequests().antMatchers(HttpMethod.POST, SecurityConstants.SIGN_UP_URL)
 				.permitAll().antMatchers(HttpMethod.GET, "/api/cards").permitAll()
 				.antMatchers(HttpMethod.GET, "/api/scrap/**").hasRole("ADMIN")
-				.antMatchers(HttpMethod.GET, "/api/cards/*").permitAll().anyRequest().authenticated().and()
+				.antMatchers(HttpMethod.GET, "/api/cards/**").permitAll().anyRequest().authenticated().and()
 				.addFilter(new AuthenticationFilter(authenticationManager()))
 				.addFilter(new AutherizationFilter(authenticationManager(), userRepo)).sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS); // Users must be authorized before user REST
