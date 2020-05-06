@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import com.CardTracker.SoftwareEng.shared.dto.UserDto;
-import com.CardTracker.SoftwareEng.shared.dto.CardDto;
+import com.CardTracker.SoftwareEng.shared.dto.PlayerStatsDTO;
 
 public interface UserService extends UserDetailsService {
 
@@ -18,9 +18,9 @@ public interface UserService extends UserDetailsService {
 
 	UserDto updateUser(String userId, UserDto userDto);
 
-	List<CardDto> getFavoriteCards(String userId, int page, int limit);
+	List<PlayerStatsDTO> getFavoriteCards(String userId, int page, int limit);
 
-	CardDto addFavoriteCard(String userId, long cardId);
+	PlayerStatsDTO addFavoriteCard(String userId, long cardId);
 
 	boolean deleteFavorite(String userId, long cardId);
 }

@@ -13,12 +13,12 @@ import org.springframework.stereotype.Service;
 
 import com.CardTracker.SoftwareEng.entity.CardEntity;
 import com.CardTracker.SoftwareEng.entity.UserEntity;
-
+import com.CardTracker.SoftwareEng.entity.CardEntity;
 import com.CardTracker.SoftwareEng.io.repository.UserRepository;
 import com.CardTracker.SoftwareEng.security.UserPrincipal;
 import com.CardTracker.SoftwareEng.service.CardService;
 import com.CardTracker.SoftwareEng.service.UserService;
-import com.CardTracker.SoftwareEng.shared.dto.CardDto;
+import com.CardTracker.SoftwareEng.shared.dto.PlayerStatsDTO;
 import com.CardTracker.SoftwareEng.shared.dto.UserDto;
 import com.CardTracker.SoftwareEng.shared.Utils;
 
@@ -137,16 +137,15 @@ public class UserServiceImpl implements UserService {
 
 	// Gets all cards a user liked
 	@Override
-	public List<CardDto> getFavoriteCards(String userId, int page, int limit) {
-		List<CardDto> favoriteCards = new ArrayList<>();
+	public List<PlayerStatsDTO> getFavoriteCards(String userId, int page, int limit) {
+		List<PlayerStatsDTO> favoriteCards = new ArrayList<>();
 
 		UserEntity userProfile = userRepository.findByUserId(userId);
 		for (CardEntity card : userProfile.getFavorites()) {
 
-			CardDto cardData = new CardDto();
+			PlayerStatsDTO cardData = new PlayerStatsDTO();
 
 			BeanUtils.copyProperties(card, cardData);
-			cardData.setFavorite(true);
 
 			favoriteCards.add(cardData);
 		}
@@ -156,21 +155,23 @@ public class UserServiceImpl implements UserService {
 
 	// adds a favorite card
 	@Override
-	public CardDto addFavoriteCard(String userId, long cardId) {
-		CardDto cardDto = new CardDto();
+	public PlayerStatsDTO addFavoriteCard(String userId, long cardId) {
+		PlayerStatsDTO cardDto = new PlayerStatsDTO();
 		UserDto userDto = new UserDto();
 
 		UserEntity userEntity = userRepository.findByUserId(userId);
 		BeanUtils.copyProperties(userEntity, userDto);
 
 		cardDto = cardService.getCard(cardId);
+		if(cardDto == null) {
+			return null;
+		}
+		
 		CardEntity cardEntity = new CardEntity();
 		BeanUtils.copyProperties(cardDto, cardEntity);
 
 		userEntity.setFavorites(cardEntity);
 		userRepository.save(userEntity);
-
-		cardDto.setFavorite(true);
 
 		return cardDto;
 	}
@@ -178,7 +179,7 @@ public class UserServiceImpl implements UserService {
 	// delete a favorite card
 	@Override
 	public boolean deleteFavorite(String userId, long cardId) {
-		CardDto cardDto = new CardDto();
+		PlayerStatsDTO cardDto = new PlayerStatsDTO();
 		UserDto userDto = new UserDto();
 
 		UserEntity userEntity = userRepository.findByUserId(userId);
@@ -186,7 +187,7 @@ public class UserServiceImpl implements UserService {
 
 		List<CardEntity> userFavorites = userEntity.getFavorites();
 		for (CardEntity card : userFavorites) {
-			if (card.getCardId() == cardId) {
+			if (card.getCardID() == cardId) {
 				userFavorites.remove(card);
 				break;
 			}

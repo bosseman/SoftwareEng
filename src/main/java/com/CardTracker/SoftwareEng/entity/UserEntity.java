@@ -44,7 +44,7 @@ public class UserEntity implements Serializable {
 	private Boolean emailVerificationStatus = false; // Default
 
 	@ManyToMany
-	@JoinTable(name = "usersFavorites", joinColumns = @JoinColumn(name = "userId"), inverseJoinColumns = @JoinColumn(name = "cardId"))
+	@JoinTable(name = "usersFavorites", joinColumns = @JoinColumn(name = "userId"), inverseJoinColumns = @JoinColumn(name = "cardID"))
 	private List<CardEntity> favorites;
 
 	@ManyToMany(cascade = { CascadeType.PERSIST }, fetch = FetchType.EAGER)
@@ -107,6 +107,9 @@ public class UserEntity implements Serializable {
 		this.emailVerificationStatus = emailVerificationStatus;
 	}
 
+	
+
+
 	public List<CardEntity> getFavorites() {
 		return favorites;
 	}
@@ -114,7 +117,6 @@ public class UserEntity implements Serializable {
 	public void setFavorites(CardEntity favorites) {
 		this.favorites.add(favorites);
 	}
-
 	public void setFavorites(List<CardEntity> favorites) {
 		this.favorites = favorites;
 	}

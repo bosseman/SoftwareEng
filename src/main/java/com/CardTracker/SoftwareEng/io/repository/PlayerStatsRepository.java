@@ -9,14 +9,13 @@ import com.CardTracker.SoftwareEng.entity.CardEntity;
 import com.CardTracker.SoftwareEng.entity.playerInfo;
 
 @Repository
-public interface CardRepository extends CrudRepository<CardEntity, Long> {
-	public CardEntity findById(long id);
+public interface PlayerStatsRepository extends CrudRepository<playerInfo, Long>{
+	
+	public playerInfo findById(long id);
 
-	public List<CardEntity> findByNameContains(String name);
+	public List<playerInfo> findByNameContains(String name);
 	
-	public CardEntity findByName(String name);
+	public playerInfo findByName(String name);
 	
-	public List<CardEntity> findByPlayer(long player);
-	
-
+	public playerInfo findByMatchingId(String matchingId);
 }

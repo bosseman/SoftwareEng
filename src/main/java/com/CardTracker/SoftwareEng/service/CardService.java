@@ -4,13 +4,13 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.CardTracker.SoftwareEng.shared.dto.CardDto;
+import com.CardTracker.SoftwareEng.shared.dto.PlayerStatsDTO;
 
 public interface CardService {
 
-	public CardDto getCard(long id);
+	public PlayerStatsDTO getCard(long id);
 
-	public List<CardDto> getAllCards();
+	public List<PlayerStatsDTO> getAllCards();
 
-	public List<CardDto> getAllCardsLike(String searchName);
+	public List<PlayerStatsDTO> getAllCardsLike(String searchName);
 }

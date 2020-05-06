@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.CardTracker.SoftwareEng.service.CardService;
 import com.CardTracker.SoftwareEng.service.UserService;
-import com.CardTracker.SoftwareEng.shared.dto.CardDto;
+import com.CardTracker.SoftwareEng.shared.dto.PlayerStatsDTO;
 import com.CardTracker.SoftwareEng.shared.dto.UserDto;
 import com.CardTracker.SoftwareEng.ui.request.UserLoginRequestModel;
 import com.CardTracker.SoftwareEng.ui.request.CreateUserRequestModel;
@@ -31,9 +32,9 @@ import com.CardTracker.SoftwareEng.ui.request.UpdateUserRequestModel;
 import com.CardTracker.SoftwareEng.ui.response.CreateUserResponseModel;
 import com.CardTracker.SoftwareEng.ui.response.DeleteCardResponseModel;
 import com.CardTracker.SoftwareEng.ui.response.GetUserResponseModel;
-import com.CardTracker.SoftwareEng.ui.response.UserLoginResponseModel;
-import com.CardTracker.SoftwareEng.ui.response.GetCardDetailsResponseModel;
 
+import com.CardTracker.SoftwareEng.ui.response.GetCardDetailsResponseModel;
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
@@ -101,13 +102,13 @@ public class UserController {
 		
 		List<GetCardDetailsResponseModel> listOfCards = new ArrayList<>();
 
-		List<CardDto> cards = userService.getFavoriteCards(userId, page, limit);
+		List<PlayerStatsDTO> cards = userService.getFavoriteCards(userId, page, limit);
 
-		for (CardDto card : cards) {
+		for (PlayerStatsDTO card : cards) {
 			GetCardDetailsResponseModel cardModel = new GetCardDetailsResponseModel();
 			BeanUtils.copyProperties(card, cardModel);
 			listOfCards.add(cardModel);
-			System.out.println(card);
+			//System.out.println(card);
 		}
 
 		return listOfCards;
@@ -120,7 +121,7 @@ public class UserController {
 			@PathVariable("cardId") long cardId) {
 		GetCardDetailsResponseModel cardModel = new GetCardDetailsResponseModel();
 
-		CardDto cardDto = userService.addFavoriteCard(userId, cardId);
+		PlayerStatsDTO cardDto = userService.addFavoriteCard(userId, cardId);
 		BeanUtils.copyProperties(cardDto, cardModel);
 
 		return cardModel;

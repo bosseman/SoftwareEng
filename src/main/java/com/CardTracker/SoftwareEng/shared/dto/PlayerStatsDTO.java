@@ -1,21 +1,23 @@
-package com.CardTracker.SoftwareEng.ui.response;
+package com.CardTracker.SoftwareEng.shared.dto;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import com.CardTracker.SoftwareEng.entity.CardEntity;
 import com.CardTracker.SoftwareEng.entity.UserEntity;
 
-public class GetCardDetailsResponseModel {
+//Card data transfer object
+public class PlayerStatsDTO implements Serializable {
+
+	private static final long serialVersionUID = -1095453772425672285L;
 
 	private long playerId;
-
-	private String matchingId;
-
-	private String name;
+	
+	
+	private String Name;
 
 	private String Team;
 
@@ -52,16 +54,10 @@ public class GetCardDetailsResponseModel {
 	private String StealPer;
 
 	private String DefensiveRating;
-
-	private List<UserEntity> likedBy;
-
-	public long getPlayerId() {
-		return playerId;
-	}
-
-	public void setPlayerId(long playerId) {
-		this.playerId = playerId;
-	}
+	
+	private String matchingId;
+	
+	
 
 	public String getMatchingId() {
 		return matchingId;
@@ -71,12 +67,24 @@ public class GetCardDetailsResponseModel {
 		this.matchingId = matchingId;
 	}
 
+	public void setCardDetails(List<CardEntity> cardDetails) {
+		this.cardDetails = cardDetails;
+	}
+
+	public long getPlayerId() {
+		return playerId;
+	}
+
+	public void setPlayerId(long playerId) {
+		this.playerId = playerId;
+	}
+
 	public String getName() {
-		return name;
+		return Name;
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		Name = name;
 	}
 
 	public String getTeam() {
@@ -91,8 +99,8 @@ public class GetCardDetailsResponseModel {
 		return cardDetails;
 	}
 
-	public void setCardDetails(List<CardEntity> cardDetails) {
-		this.cardDetails = cardDetails;
+	public void setCardDetails(CardEntity cardDetails) {
+		this.cardDetails.add(cardDetails);
 	}
 
 	public String getPosition() {
@@ -223,14 +231,8 @@ public class GetCardDetailsResponseModel {
 		DefensiveRating = defensiveRating;
 	}
 
-	public List<UserEntity> getLikedBy() {
-		return likedBy;
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
-
-	public void setLikedBy(List<UserEntity> likedBy) {
-		this.likedBy = likedBy;
-	}
-	
-	
 
 }

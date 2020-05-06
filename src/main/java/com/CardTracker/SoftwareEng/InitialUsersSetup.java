@@ -22,8 +22,10 @@ import com.CardTracker.SoftwareEng.entity.AuthorityEntity;
 import com.CardTracker.SoftwareEng.entity.CardEntity;
 import com.CardTracker.SoftwareEng.entity.RoleEntity;
 import com.CardTracker.SoftwareEng.entity.UserEntity;
+import com.CardTracker.SoftwareEng.entity.playerInfo;
 import com.CardTracker.SoftwareEng.io.repository.AuthorityRepository;
 import com.CardTracker.SoftwareEng.io.repository.CardRepository;
+import com.CardTracker.SoftwareEng.io.repository.PlayerStatsRepository;
 import com.CardTracker.SoftwareEng.io.repository.RolesRepository;
 import com.CardTracker.SoftwareEng.io.repository.UserRepository;
 import com.CardTracker.SoftwareEng.shared.Utils;
@@ -45,7 +47,10 @@ public class InitialUsersSetup {
 	@Autowired
 	UserRepository userRepo;
 	@Autowired
-	CardRepository cr;
+	PlayerStatsRepository cr;
+	
+	@Autowired
+	CardRepository card;
 	
 	@EventListener
 	@Transactional
@@ -73,40 +78,72 @@ public class InitialUsersSetup {
 		}
 		
 		//loadData();
+		//loadDataPart2();
 	}
+	/*
+	private void loadDataPart2() throws FileNotFoundException, IOException{
+
+		try(BufferedReader br = new BufferedReader(new FileReader("C:/Users/bosse/cardList.csv"))){
+			String line;
+			while((line = br.readLine()) != null) {
+				
+				String[] fields = line.split(",");
+				
+				CardEntity pi = new CardEntity();
+				pi.setName(fields[2]);
+				pi.setPrice(fields[3]);
+				pi.setTimeSold(fields[4]);
+				String search = fields[1].stripLeading();
+				System.out.println(search);
+				playerInfo p = cr.findByMatchingId(search);
+				//System.out.println(p.getPlayerId());
+				pi.setPlayerID(p);
+				
+				//System.out.println(pi.getPlayerID().getMatchingId());
+				//System.out.println(pi.getName());
+				
+				card.save(pi);
+				
+
+			}
+			br.close();
+		}
+	}
+	*/
+	/*
 	private void loadData() throws FileNotFoundException, IOException {
-		//File file = new File("C:/Users/bosse/playerData.csv");
-		try(BufferedReader br = new BufferedReader(new FileReader("C:/Users/bosse/playerData.csv"))){
+
+		try(BufferedReader br = new BufferedReader(new FileReader("C:/Users/bosse/playerList.csv"))){
 			String line;
 			while((line = br.readLine()) != null) {
 				System.out.println("TEST");
 				String[] fields = line.split(",");
-				CardEntity ce = new CardEntity();
+				playerInfo ce = new playerInfo();
 				ce.setName(fields[0]);
 				ce.setTeam(fields[1]);
-				ce.setPrice(fields[2]);
-				ce.setTimeSold(fields[3]);
-				ce.setPosition(fields[4]);
-				ce.setAge(fields[5]);
-				ce.setHeight(fields[6]);
+				ce.setPosition(fields[2]);
+				ce.setAge(fields[3]);
+				ce.setHeight(fields[4]);
+				ce.setWeight(fields[5]);
+				ce.setDraftPosition(fields[6]);
 				//No wieght
-				ce.setDraftPosition(fields[8]);
-				ce.setShootingPercentage(fields[9]);
-				ce.setFreeThrowPercentage(fields[10]);
-				ce.setUsageRate(fields[11]);
-				ce.setThreePointPercentage(fields[12]);
-				ce.setFreeThrowFrequency(fields[13]);
-				ce.setAssistRate(fields[14]);
-				ce.setTurnoverRate(fields[15]);
-				ce.setReboundRate(fields[16]);
-				ce.setBlockingRate(fields[17]);
-				ce.setStealRate(fields[18]);
-				ce.setDefenseRate(fields[19]);
+				ce.setShootingPer(fields[7]);
+				ce.setFreeThrowPer(fields[8]);
+				ce.setUsageRate(fields[9]);
+				ce.setThreePointPer(fields[10]);
+				ce.setFreeThrowFreq(fields[11]);
+				ce.setAssistPer(fields[12]);
+				ce.setTurnoverPer(fields[13]);
+				ce.setReboundPer(fields[14]);
+				ce.setBlockPer(fields[15]);
+				ce.setStealPer(fields[16]);
+				ce.setMatchingId(fields[17]);
 				cr.save(ce);
 			}
 			br.close();
 		}
 	}
+	*/
 	private AuthorityEntity createAuthority(String name) {
 
 		AuthorityEntity authority = authorityRepo.findByName(name);

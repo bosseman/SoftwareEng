@@ -17,7 +17,7 @@ public class UserDto implements Serializable {
 	private String encryptedPassword; // password encrypted --> save this in DB
 	private String emailVerificationToken;
 	private Boolean emailVerificationStatus = false; // default
-	private List<CardDto> favorites;
+	private List<PlayerStatsDTO> favorites;
 
 	public long getId() {
 		return id;
@@ -83,11 +83,11 @@ public class UserDto implements Serializable {
 		this.emailVerificationStatus = emailVerificationStatus;
 	}
 
-	public List<CardDto> getFavorites() {
+	public List<PlayerStatsDTO> getFavorites() {
 		return favorites;
 	}
 
-	public void setFavorites(List<CardDto> favorites) {
+	public void setFavorites(List<PlayerStatsDTO> favorites) {
 		this.favorites = favorites;
 	}
 
